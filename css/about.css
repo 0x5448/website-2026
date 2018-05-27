@@ -1,0 +1,63 @@
+ .bottom {
+    width: 100%;
+    height: auto;
+  }
+
+  .medium-right {
+    width: 50%;
+    height: auto;
+    float: right;
+    padding: 1% 2% 1% 2%;
+  }
+
+  .medium-left {
+    width: 50%;
+    height: auto;
+    float: left;
+    padding: 1% 2% 1% 2%;
+  }
+/*
+ .quote {
+    width: 5%;
+    height: auto;
+  }
+  */
+
+  .quote-left {
+  width: auto;
+  height: auto;
+  float: left;
+  padding-left: 30px;
+}
+.quote-right {
+  width: auto;
+  height: auto;
+  float: right;
+  padding-right: 30px;
+}
+.quote-text {
+  font-family: Merriweather;
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.4;
+  text-align: center;
+}
+
+  div {
+    padding: 1% 2% 1% 2%;
+}
+
+hr {
+    /*width: 90%;*/
+    border: 0;
+    height: 1px;
+    background: #000;
+    opacity: 0.1;
+}
+
+h5 {
+	text-align: center;
+	font-style: italic;
+	font-weight: normal;
+}
