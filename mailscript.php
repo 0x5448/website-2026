@@ -1,4 +1,8 @@
 <?php
+
+// NOTE: THE WORD 'PHONY' HAS BEEN SUBSTITUTED FOR ACTUAL VALUES IN SOME PLACES FOR SECURITY REASONS
+// THIS FILE IS FOR PORFOLIO PURPOSES; THE ACTUAL FILE MAY HAVE DIFFERENT VALUES
+
 require_once "Mail.php";
 
 if(!isset($_POST['submit']))
@@ -31,10 +35,10 @@ $from = "Admin <admin@tedhadges.com>";
 $to = "Ted Hadges <tedhadges@gmail.com>";
 $subject = "New Form Submission";
 $body = "$email_body";
-$host = "ssl://cpanel.freehosting.com";
-$port = "465";
-$username = "admin@tedhadges.com";
-$password = ",Q.o3Py!#rIu";
+$host = "PHONY";
+$port = "PHONY";
+$username = "PHONY";
+$password = "PHONY";
 $headers = array ('From' => $from,
   'To' => $to,
   'Subject' => $subject);
