@@ -4,7 +4,8 @@
   --muted: #666666;
   --accent: #c0562b;
   --line: rgba(0,0,0,0.1);
-  --maxw: 760px;
+  --maxw: 1080px;
+  --readable: 62ch;
   --gap: clamp(1.5rem, 4vw, 3rem);
 }
 
@@ -56,6 +57,8 @@ a { color: inherit; }
 /* Layout */
 main { max-width: var(--maxw); margin: 0 auto; padding: 0 clamp(1rem, 4vw, 2rem); }
 .section { padding: var(--gap) 0; border-top: 1px solid var(--line); }
+/* Keep prose at a comfortable reading measure even in the wide container */
+.section > p { max-width: var(--readable); }
 
 /* Hero */
 .hero {
@@ -90,6 +93,7 @@ main { max-width: var(--maxw); margin: 0 auto; padding: 0 clamp(1rem, 4vw, 2rem)
 
 /* Contact */
 .section--contact { text-align: center; }
+.section--contact > p { margin-inline: auto; }
 .button {
   display: inline-block;
   margin-top: 0.5rem;
