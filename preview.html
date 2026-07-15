@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ted Hadges — Saxophonist (preview)</title>
+  <meta name="description" content="Ted Hadges — saxophonist. Live, studio, and session recordings.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --ink:      #16120f;   /* warm near-black */
+      --ink-2:    #211a15;   /* raised warm brown */
+      --paper:    #ece4d6;   /* warm bone */
+      --paper-2:  #f4eee3;
+      --brass:    #d98a2b;   /* sax / sunset gold */
+      --teal:     #17817a;   /* cool complement */
+      --muted:    #9c8f7f;
+      --line:     rgba(255,255,255,0.14);
+      --line-dark: rgba(22,18,15,0.16);
+
+      --display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --label:   "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+      --body:    Georgia, "Times New Roman", serif;
+
+      --pad: clamp(1.25rem, 5vw, 4rem);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--body);
+      font-size: clamp(1rem, 0.6rem + 0.7vw, 1.15rem);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+
+    .eyebrow {
+      font-family: var(--label);
+      text-transform: uppercase;
+      letter-spacing: 0.32em;
+      font-size: clamp(0.68rem, 1.4vw, 0.8rem);
+      font-weight: 700;
+    }
+
+    /* ---------- top bar ---------- */
+    .topbar {
+      position: absolute; z-index: 5; top: 0; left: 0; right: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: clamp(1rem, 2.5vw, 1.75rem) var(--pad);
+      color: #fdfaf3;
+    }
+    .topbar::before {   /* subtle wash so nav reads over the bright sky */
+      content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+      background: linear-gradient(180deg, rgba(22,18,15,0.5), rgba(22,18,15,0));
+    }
+    .topbar__brand { font-family: var(--label); letter-spacing: 0.3em; text-transform: uppercase; font-weight: 700; text-decoration: none; font-size: 0.8rem; }
+    .topbar nav { display: flex; gap: clamp(0.9rem, 2.5vw, 1.75rem); }
+    .topbar nav a { font-family: var(--label); letter-spacing: 0.22em; text-transform: uppercase; font-size: 0.72rem; text-decoration: none; opacity: 0.9; }
+    .topbar nav a:hover { opacity: 1; }
+
+    /* ---------- hero ---------- */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero__img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: 50% 35%;
+      filter: saturate(0.92) contrast(1.04);
+    }
+    /* legibility + cohesion wash */
+    .hero::after {
+      content: ""; position: absolute; inset: 0;
+      background:
+        linear-gradient(180deg, rgba(22,18,15,0.15) 0%, rgba(22,18,15,0) 30%, rgba(22,18,15,0.72) 78%, var(--ink) 100%),
+        linear-gradient(90deg, rgba(22,18,15,0.55) 0%, rgba(22,18,15,0) 55%);
+    }
+    .hero__inner {
+      position: relative; z-index: 2;
+      padding: var(--pad);
+      padding-bottom: clamp(2rem, 6vw, 4.5rem);
+      max-width: 1100px;
+    }
+    .hero__eyebrow { color: #f0a94a; display: block; margin-bottom: clamp(0.9rem, 2vw, 1.4rem); text-shadow: 0 1px 3px rgba(0,0,0,0.55), 0 0 22px rgba(0,0,0,0.5); }
+    .hero__name {
+      font-family: var(--display);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.035em;
+      line-height: 0.82;
+      font-size: clamp(3.4rem, 15vw, 11rem);
+      margin: 0;
+      color: #fdfaf3;
+      text-shadow: 0 2px 40px rgba(0,0,0,0.35);
+    }
+    .hero__sub {
+      margin: clamp(1rem, 2.5vw, 1.6rem) 0 0;
+      max-width: 40ch;
+      font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+      color: rgba(247,240,225,0.95);
+      text-shadow: 0 1px 12px rgba(0,0,0,0.5);
+    }
+    /* vertical side label — the signature marquee touch */
+    .hero__side {
+      position: absolute; right: clamp(0.6rem, 1.5vw, 1.4rem); bottom: 0; z-index: 3;
+      writing-mode: vertical-rl;
+      font-family: var(--label);
+      text-transform: uppercase; letter-spacing: 0.5em; font-weight: 700;
+      font-size: 0.75rem; color: rgba(247,240,225,0.75);
+      padding-bottom: clamp(2rem, 6vw, 4.5rem);
+    }
+
+    /* ---------- generic section ---------- */
+    section { padding: clamp(3.5rem, 9vw, 7rem) var(--pad); }
+    .wrap { max-width: 1100px; margin-inline: auto; }
+    .section-label { color: var(--teal); display: block; margin-bottom: 1.5rem; }
+    .on-paper .section-label { color: var(--brass); }
+
+    /* ---------- about ---------- */
+    .about { background: var(--paper); color: var(--ink); }
+    .about__statement {
+      font-family: var(--body);
+      font-size: clamp(1.5rem, 4.2vw, 3rem);
+      line-height: 1.22;
+      letter-spacing: -0.01em;
+      margin: 0;
+      max-width: 20ch;
+    }
+    .about__statement em { font-style: italic; color: var(--teal); }
+    .about__note { margin: clamp(1.5rem,3vw,2.2rem) 0 0; max-width: 46ch; color: #4b4137; }
+
+    /* ---------- music ---------- */
+    .music { background: var(--ink-2); }
+    .music__group { margin-top: clamp(2.2rem, 5vw, 3.5rem); }
+    .music__group:first-of-type { margin-top: clamp(1.5rem, 3vw, 2rem); }
+    .group-head {
+      display: flex; align-items: baseline; gap: 0.9rem;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 0.7rem; margin-bottom: 1.5rem;
+    }
+    .group-head h3 {
+      font-family: var(--display); font-weight: 800; text-transform: uppercase;
+      letter-spacing: -0.01em; font-size: clamp(1.1rem, 2.4vw, 1.5rem); margin: 0;
+    }
+    .group-head span { font-family: var(--label); letter-spacing: 0.22em; text-transform: uppercase; font-size: 0.7rem; color: var(--muted); }
+
+    .embed { border: 0; display: block; width: 100%; background: #000; }
+    .embed--video { position: relative; aspect-ratio: 16 / 9; }
+    .embed--video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .embed--audio iframe { width: 100%; height: 300px; border: 0; display: block; }
+    .stack > * + * { margin-top: 1rem; }
+
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; align-items: start; }
+    .card iframe { width: 100%; max-width: 400px; border: 0; display: block; }
+    .card--tall iframe { height: 439px; }
+    .card--short iframe { height: 208px; }
+    .card__cap { font-family: var(--label); letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.68rem; color: var(--muted); margin: 0 0 0.6rem; }
+
+    /* ---------- contact ---------- */
+    .contact { background: var(--ink); text-align: left; }
+    .contact__line {
+      font-family: var(--body);
+      font-size: clamp(2rem, 7vw, 4.5rem);
+      line-height: 1.05; margin: 0.4rem 0 1.8rem; letter-spacing: -0.015em;
+    }
+    .contact__line em { font-style: italic; color: var(--brass); }
+    .mailto {
+      display: inline-block;
+      font-family: var(--label); text-transform: uppercase; letter-spacing: 0.18em; font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.95rem 1.8rem;
+      border: 1px solid var(--teal);
+      color: var(--paper-2);
+      text-decoration: none;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+    .mailto:hover, .mailto:focus-visible { background: var(--teal); color: var(--ink); }
+
+    /* ---------- footer ---------- */
+    footer { padding: 2rem var(--pad); border-top: 1px solid var(--line); }
+    footer p { margin: 0; font-family: var(--label); letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.7rem; color: var(--muted); }
+
+    /* ---------- a11y / motion ---------- */
+    :focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
+    .reveal { opacity: 0; transform: translateY(18px); animation: rise 0.9s cubic-bezier(.2,.7,.2,1) forwards; }
+    .reveal.d1 { animation-delay: 0.08s; }
+    .reveal.d2 { animation-delay: 0.18s; }
+    .reveal.d3 { animation-delay: 0.28s; }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { animation: none; opacity: 1; transform: none; }
+    }
+    @media (max-width: 620px) {
+      .hero__side { display: none; }
+    }
+  </style>
+</head>
+<body class="preview">
+  <header class="topbar">
+    <a class="topbar__brand" href="#top">Ted Hadges</a>
+    <nav aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#music">Listen</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section id="top" class="hero">
+    <img class="hero__img" src="images/saxpark.jpg"
+         alt="Ted Hadges holding a tenor saxophone in warm evening light">
+    <div class="hero__inner">
+      <span class="eyebrow hero__eyebrow reveal">Tenor Saxophone — Live / Studio / Session</span>
+      <h1 class="hero__name reveal d1">Ted<br>Hadges</h1>
+      <p class="hero__sub reveal d2">A selection of playing across live sets, the studio, and session work.</p>
+    </div>
+    <span class="hero__side">Saxophonist</span>
+  </section>
+
+  <section id="about" class="about on-paper">
+    <div class="wrap">
+      <span class="eyebrow section-label">About</span>
+      <p class="about__statement">A saxophonist who lives in the space between <em>jazz</em>, the studio, and the stage.</p>
+      <p class="about__note">Ted Hadges plays tenor across live sets, studio production, and session work — from street sessions to records. Have a listen below.</p>
+    </div>
+  </section>
+
+  <section id="music" class="music">
+    <div class="wrap">
+      <span class="eyebrow section-label">Listen</span>
+
+      <div class="music__group">
+        <div class="group-head"><h3>Live</h3><span>Video</span></div>
+        <div class="embed embed--video">
+          <iframe src="https://player.vimeo.com/video/94069163"
+                  title="Ted Hadges — video performance"
+                  allow="fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <div class="music__group">
+        <div class="group-head"><h3>Pink Fabric</h3><span>Records</span></div>
+        <div class="cards">
+          <div class="card card--tall">
+            <p class="card__cap">Lady Magnet</p>
+            <iframe title="LADY MAGNET by PINK FABRIC" loading="lazy" seamless
+                    src="https://bandcamp.com/EmbeddedPlayer/album=500709890/size=large/bgcol=ece4d6/linkcol=17817a/artwork=small/transparent=true/"></iframe>
+          </div>
+          <div class="card card--short">
+            <p class="card__cap">Sugar Hurts My Eyes</p>
+            <iframe title="Sugar Hurts My Eyes by PINK FABRIC" loading="lazy" seamless
+                    src="https://bandcamp.com/EmbeddedPlayer/album=3026051395/size=large/bgcol=ece4d6/linkcol=17817a/artwork=small/track=1848929187/transparent=true/"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="music__group">
+        <div class="group-head"><h3>Playlists</h3><span>SoundCloud</span></div>
+        <div class="stack">
+          <div class="embed embed--audio">
+            <iframe title="SoundCloud playlist 1" loading="lazy" scrolling="no" frameborder="no" allow="autoplay"
+                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2461482&color=%23d98a2b&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+          </div>
+          <div class="embed embed--audio">
+            <iframe title="SoundCloud playlist 2" loading="lazy" scrolling="no" frameborder="no" allow="autoplay"
+                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/292240661&color=%23d98a2b&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+          </div>
+          <div class="embed embed--audio">
+            <iframe title="SoundCloud playlist 3" loading="lazy" scrolling="no" frameborder="no" allow="autoplay"
+                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2043184&color=%23d98a2b&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <span class="eyebrow section-label" style="color:var(--teal)">Bookings</span>
+      <p class="contact__line">Let's <em>play</em>.</p>
+      <a class="mailto" href="mailto:tedhadgesmusic@gmail.com">tedhadgesmusic@gmail.com</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Ted Hadges</p>
+  </footer>
+</body>
+</html>
