@@ -4,7 +4,6 @@
   --muted: #666666;
   --accent: #c0562b;
   --line: rgba(0,0,0,0.1);
-  --tint: #f6f3f0;
   --maxw: 760px;
   --gap: clamp(1.5rem, 4vw, 3rem);
 }
@@ -55,9 +54,8 @@ a { color: inherit; }
 .site-nav nav a:focus-visible { color: var(--fg); border-bottom-color: var(--accent); }
 
 /* Layout: sections span full width; .wrap centers content at reading width.
-   Alternating tint bands give the side margins subtle color. */
-.section { padding: var(--gap) 0; }
-.section--tint { background: var(--tint); }
+   A subtle hairline separates adjacent sections. */
+.section { padding: var(--gap) 0; border-top: 1px solid var(--line); }
 .wrap {
   max-width: var(--maxw);
   margin-inline: auto;
