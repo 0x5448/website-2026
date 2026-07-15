@@ -4,8 +4,8 @@
   --muted: #666666;
   --accent: #c0562b;
   --line: rgba(0,0,0,0.1);
-  --maxw: 1080px;
-  --readable: 62ch;
+  --tint: #f6f3f0;
+  --maxw: 760px;
   --gap: clamp(1.5rem, 4vw, 3rem);
 }
 
@@ -54,20 +54,24 @@ a { color: inherit; }
 .site-nav nav a:hover,
 .site-nav nav a:focus-visible { color: var(--fg); border-bottom-color: var(--accent); }
 
-/* Layout */
-main { max-width: var(--maxw); margin: 0 auto; padding: 0 clamp(1rem, 4vw, 2rem); }
-.section { padding: var(--gap) 0; border-top: 1px solid var(--line); }
-/* Keep prose at a comfortable reading measure even in the wide container */
-.section > p { max-width: var(--readable); }
+/* Layout: sections span full width; .wrap centers content at reading width.
+   Alternating tint bands give the side margins subtle color. */
+.section { padding: var(--gap) 0; }
+.section--tint { background: var(--tint); }
+.wrap {
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
 
 /* Hero */
-.hero {
+.hero { padding: var(--gap) 0; }
+.hero__inner {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 1.5rem;
-  padding: var(--gap) 0;
 }
 .hero__photo {
   width: clamp(160px, 40vw, 240px);
@@ -93,7 +97,6 @@ main { max-width: var(--maxw); margin: 0 auto; padding: 0 clamp(1rem, 4vw, 2rem)
 
 /* Contact */
 .section--contact { text-align: center; }
-.section--contact > p { margin-inline: auto; }
 .button {
   display: inline-block;
   margin-top: 0.5rem;
