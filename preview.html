@@ -8,15 +8,14 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <style>
     :root {
-      --ink:      #16120f;   /* warm near-black */
-      --ink-2:    #211a15;   /* raised warm brown */
-      --paper:    #ece4d6;   /* warm bone */
+      --ink:      #16120f;
+      --ink-2:    #211a15;
+      --paper:    #ece4d6;
       --paper-2:  #f4eee3;
-      --brass:    #d98a2b;   /* sax / sunset gold */
-      --teal:     #17817a;   /* cool complement */
+      --brass:    #d98a2b;
+      --teal:     #17817a;
       --muted:    #9c8f7f;
       --line:     rgba(255,255,255,0.14);
-      --line-dark: rgba(22,18,15,0.16);
 
       --display: "Helvetica Neue", Helvetica, Arial, sans-serif;
       --label:   "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
@@ -24,259 +23,219 @@
 
       --pad: clamp(1.25rem, 5vw, 4rem);
     }
-
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
-      margin: 0;
-      background: var(--ink);
-      color: var(--paper);
+      margin: 0; background: var(--ink); color: var(--paper);
       font-family: var(--body);
       font-size: clamp(1rem, 0.6rem + 0.7vw, 1.15rem);
-      line-height: 1.65;
-      -webkit-font-smoothing: antialiased;
+      line-height: 1.65; -webkit-font-smoothing: antialiased;
     }
     a { color: inherit; }
 
     .eyebrow {
-      font-family: var(--label);
-      text-transform: uppercase;
-      letter-spacing: 0.32em;
-      font-size: clamp(0.68rem, 1.4vw, 0.8rem);
-      font-weight: 700;
+      font-family: var(--label); text-transform: uppercase;
+      letter-spacing: 0.32em; font-size: clamp(0.68rem, 1.4vw, 0.8rem); font-weight: 700;
     }
 
     /* ---------- top bar ---------- */
     .topbar {
-      position: absolute; z-index: 5; top: 0; left: 0; right: 0;
+      position: fixed; z-index: 20; top: 0; left: 0; right: 0;
       display: flex; align-items: center; justify-content: space-between;
-      padding: clamp(1rem, 2.5vw, 1.75rem) var(--pad);
+      padding: clamp(0.9rem, 2.2vw, 1.5rem) var(--pad);
       color: #fdfaf3;
+      transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
     }
-    .topbar::before {   /* subtle wash so nav reads over the bright sky */
+    .topbar::before {
       content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-      background: linear-gradient(180deg, rgba(22,18,15,0.5), rgba(22,18,15,0));
+      background: linear-gradient(180deg, rgba(22,18,15,0.55), rgba(22,18,15,0));
+      transition: opacity 0.3s ease;
     }
-    .topbar__brand { font-family: var(--label); letter-spacing: 0.3em; text-transform: uppercase; font-weight: 700; text-decoration: none; font-size: 0.8rem; }
-    .topbar nav { display: flex; gap: clamp(0.9rem, 2.5vw, 1.75rem); }
-    .topbar nav a { font-family: var(--label); letter-spacing: 0.22em; text-transform: uppercase; font-size: 0.72rem; text-decoration: none; opacity: 0.9; }
-    .topbar nav a:hover { opacity: 1; }
+    .topbar.scrolled { background: rgba(22,18,15,0.9); backdrop-filter: blur(8px); }
+    .topbar.scrolled::before { opacity: 0; }
+    .topbar__brand {
+      font-family: var(--display); font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.02em; text-decoration: none; font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+    }
+    .topbar nav { display: flex; gap: clamp(0.9rem, 2.5vw, 1.9rem); }
+    .topbar nav a {
+      font-family: var(--label); letter-spacing: 0.22em; text-transform: uppercase;
+      font-size: clamp(0.68rem, 1.3vw, 0.76rem); text-decoration: none; opacity: 0.85;
+      padding-bottom: 3px; border-bottom: 1px solid transparent;
+    }
+    .topbar nav a:hover, .topbar nav a:focus-visible { opacity: 1; border-bottom-color: var(--brass); }
 
     /* ---------- hero ---------- */
-    .hero {
-      position: relative;
-      min-height: 100svh;
-      display: flex;
-      align-items: flex-end;
-      overflow: hidden;
-    }
+    .hero { position: relative; height: 100svh; min-height: 520px; overflow: hidden; }
     .hero__img {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: 50% 35%;
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: 50% 30%;
       filter: saturate(0.92) contrast(1.04);
     }
-    /* legibility + cohesion wash */
     .hero::after {
       content: ""; position: absolute; inset: 0;
       background:
-        linear-gradient(180deg, rgba(22,18,15,0.15) 0%, rgba(22,18,15,0) 30%, rgba(22,18,15,0.72) 78%, var(--ink) 100%),
-        linear-gradient(90deg, rgba(22,18,15,0.55) 0%, rgba(22,18,15,0) 55%);
+        linear-gradient(180deg, rgba(22,18,15,0.35) 0%, rgba(22,18,15,0) 22%, rgba(22,18,15,0) 62%, rgba(22,18,15,0.9) 100%),
+        linear-gradient(90deg, rgba(22,18,15,0.35) 0%, rgba(22,18,15,0) 45%);
     }
-    .hero__inner {
-      position: relative; z-index: 2;
-      padding: var(--pad);
-      padding-bottom: clamp(2rem, 6vw, 4.5rem);
-      max-width: 1100px;
-    }
-    .hero__eyebrow { color: #f0a94a; display: block; margin-bottom: clamp(0.9rem, 2vw, 1.4rem); text-shadow: 0 1px 3px rgba(0,0,0,0.55), 0 0 22px rgba(0,0,0,0.5); }
-    .hero__name {
-      font-family: var(--display);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: -0.035em;
-      line-height: 0.82;
-      font-size: clamp(3.4rem, 15vw, 11rem);
-      margin: 0;
-      color: #fdfaf3;
-      text-shadow: 0 2px 40px rgba(0,0,0,0.35);
-    }
-    .hero__sub {
-      margin: clamp(1rem, 2.5vw, 1.6rem) 0 0;
-      max-width: 40ch;
-      font-size: clamp(1.05rem, 1.4vw, 1.3rem);
-      color: rgba(247,240,225,0.95);
-      text-shadow: 0 1px 12px rgba(0,0,0,0.5);
-    }
-    /* vertical side label — the signature marquee touch */
     .hero__side {
-      position: absolute; right: clamp(0.6rem, 1.5vw, 1.4rem); bottom: 0; z-index: 3;
+      position: absolute; right: clamp(0.7rem, 1.6vw, 1.5rem); top: 50%; transform: translateY(-50%); z-index: 3;
       writing-mode: vertical-rl;
-      font-family: var(--label);
-      text-transform: uppercase; letter-spacing: 0.5em; font-weight: 700;
-      font-size: 0.75rem; color: rgba(247,240,225,0.75);
-      padding-bottom: clamp(2rem, 6vw, 4.5rem);
+      font-family: var(--label); text-transform: uppercase; letter-spacing: 0.5em; font-weight: 700;
+      font-size: 0.72rem; color: rgba(247,240,225,0.72);
     }
+    .scrolldown {
+      position: absolute; z-index: 3; left: 50%; bottom: clamp(1.4rem, 4vw, 2.4rem); transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+      text-decoration: none; color: rgba(247,240,225,0.85);
+    }
+    .scrolldown span {
+      font-family: var(--label); text-transform: uppercase; letter-spacing: 0.35em; font-size: 0.66rem;
+    }
+    .scrolldown svg { width: 22px; height: 22px; animation: bob 1.8s ease-in-out infinite; }
+    @keyframes bob { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(6px);} }
 
-    /* ---------- generic section ---------- */
+    /* ---------- generic ---------- */
     section { padding: clamp(3.5rem, 9vw, 7rem) var(--pad); }
-    .wrap { max-width: 1100px; margin-inline: auto; }
+    .wrap { max-width: 1140px; margin-inline: auto; }
     .section-label { color: var(--teal); display: block; margin-bottom: 1.5rem; }
-    .on-paper .section-label { color: var(--brass); }
+    .about .section-label { color: var(--brass); }
 
     /* ---------- about ---------- */
     .about { background: var(--paper); color: var(--ink); }
     .about__statement {
-      font-family: var(--body);
-      font-size: clamp(1.5rem, 4.2vw, 3rem);
-      line-height: 1.22;
-      letter-spacing: -0.01em;
-      margin: 0;
-      max-width: 20ch;
+      font-family: var(--body); font-size: clamp(1.5rem, 4.2vw, 3rem);
+      line-height: 1.22; letter-spacing: -0.01em; margin: 0; max-width: 20ch;
     }
     .about__statement em { font-style: italic; color: var(--teal); }
     .about__note { margin: clamp(1.5rem,3vw,2.2rem) 0 0; max-width: 46ch; color: #4b4137; }
 
-    /* ---------- music ---------- */
-    .music { background: var(--ink-2); }
-    .music__group { margin-top: clamp(2.2rem, 5vw, 3.5rem); }
-    .music__group:first-of-type { margin-top: clamp(1.5rem, 3vw, 2rem); }
-    .group-head {
-      display: flex; align-items: baseline; gap: 0.9rem;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 0.7rem; margin-bottom: 1.5rem;
+    /* ---------- listen: cover-tile grid ---------- */
+    .listen { background: var(--ink); }
+    .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: clamp(0.9rem, 2vw, 1.5rem); }
+    .tile {
+      position: relative; display: block; aspect-ratio: 1 / 1; overflow: hidden;
+      text-decoration: none; background: var(--ink-2);
+      outline-offset: 3px;
     }
-    .group-head h3 {
-      font-family: var(--display); font-weight: 800; text-transform: uppercase;
-      letter-spacing: -0.01em; font-size: clamp(1.1rem, 2.4vw, 1.5rem); margin: 0;
+    .tile__img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s cubic-bezier(.2,.7,.2,1); background: #fff;
     }
-    .group-head span { font-family: var(--label); letter-spacing: 0.22em; text-transform: uppercase; font-size: 0.7rem; color: var(--muted); }
+    .tile::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(22,18,15,0) 45%, rgba(22,18,15,0.85) 100%);
+    }
+    .tile__meta { position: absolute; z-index: 2; left: 1rem; right: 1rem; bottom: 0.95rem; color: #fdfaf3; }
+    .tile__type { font-family: var(--label); text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.64rem; color: var(--brass); display: block; margin-bottom: 0.25rem; }
+    .tile__title { font-family: var(--display); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; font-size: clamp(1rem, 1.9vw, 1.25rem); display: flex; align-items: center; gap: 0.4rem; }
+    .tile__title::after { content: "\2197"; font-weight: 700; opacity: 0; transform: translate(-4px,4px); transition: opacity .3s ease, transform .3s ease; }
+    .tile:hover .tile__img, .tile:focus-visible .tile__img { transform: scale(1.06); }
+    .tile:hover .tile__title::after, .tile:focus-visible .tile__title::after { opacity: 1; transform: none; }
 
-    .embed { border: 0; display: block; width: 100%; background: #000; }
-    .embed--video { position: relative; aspect-ratio: 16 / 9; }
-    .embed--video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-    .embed--audio iframe { width: 100%; height: 300px; border: 0; display: block; }
-    .stack > * + * { margin-top: 1rem; }
-
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; align-items: start; }
-    .card iframe { width: 100%; max-width: 400px; border: 0; display: block; }
-    .card--tall iframe { height: 439px; }
-    .card--short iframe { height: 208px; }
-    .card__cap { font-family: var(--label); letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.68rem; color: var(--muted); margin: 0 0 0.6rem; }
+    /* ---------- playlists (soundcloud) ---------- */
+    .more { margin-top: clamp(2.5rem, 6vw, 4rem); }
+    .more__head { display: flex; align-items: baseline; gap: 0.8rem; border-top: 1px solid var(--line); padding-top: 1.4rem; margin-bottom: 1.4rem; }
+    .more__head h3 { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: clamp(1rem,2vw,1.3rem); margin: 0; }
+    .more__head span { font-family: var(--label); letter-spacing: 0.22em; text-transform: uppercase; font-size: 0.68rem; color: var(--muted); }
+    .sc + .sc { margin-top: 0.9rem; }
+    .sc iframe { width: 100%; height: 160px; border: 0; display: block; }
 
     /* ---------- contact ---------- */
-    .contact { background: var(--ink); text-align: left; }
-    .contact__line {
-      font-family: var(--body);
-      font-size: clamp(2rem, 7vw, 4.5rem);
-      line-height: 1.05; margin: 0.4rem 0 1.8rem; letter-spacing: -0.015em;
-    }
+    .contact { background: var(--ink-2); }
+    .contact__line { font-family: var(--body); font-size: clamp(2rem, 7vw, 4.5rem); line-height: 1.05; margin: 0.4rem 0 1.8rem; letter-spacing: -0.015em; }
     .contact__line em { font-style: italic; color: var(--brass); }
     .mailto {
-      display: inline-block;
-      font-family: var(--label); text-transform: uppercase; letter-spacing: 0.18em; font-weight: 700;
-      font-size: 0.95rem;
-      padding: 0.95rem 1.8rem;
-      border: 1px solid var(--teal);
-      color: var(--paper-2);
-      text-decoration: none;
-      transition: background-color 0.25s ease, color 0.25s ease;
+      display: inline-block; font-family: var(--label); text-transform: uppercase; letter-spacing: 0.18em; font-weight: 700;
+      font-size: 0.95rem; padding: 0.95rem 1.8rem; border: 1px solid var(--teal); color: var(--paper-2); text-decoration: none;
+      transition: background-color .25s ease, color .25s ease;
     }
     .mailto:hover, .mailto:focus-visible { background: var(--teal); color: var(--ink); }
 
     /* ---------- footer ---------- */
-    footer { padding: 2rem var(--pad); border-top: 1px solid var(--line); }
+    footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.75rem var(--pad); border-top: 1px solid var(--line); }
     footer p { margin: 0; font-family: var(--label); letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.7rem; color: var(--muted); }
+    .totop { font-family: var(--label); letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.7rem; text-decoration: none; color: var(--muted); }
+    .totop:hover, .totop:focus-visible { color: var(--paper); }
 
-    /* ---------- a11y / motion ---------- */
     :focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
-    .reveal { opacity: 0; transform: translateY(18px); animation: rise 0.9s cubic-bezier(.2,.7,.2,1) forwards; }
-    .reveal.d1 { animation-delay: 0.08s; }
-    .reveal.d2 { animation-delay: 0.18s; }
-    .reveal.d3 { animation-delay: 0.28s; }
-    @keyframes rise { to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      .reveal { animation: none; opacity: 1; transform: none; }
+      .scrolldown svg { animation: none; }
+      .tile__img { transition: none; }
     }
-    @media (max-width: 620px) {
-      .hero__side { display: none; }
-    }
+    @media (max-width: 620px) { .hero__side { display: none; } }
   </style>
 </head>
-<body class="preview">
-  <header class="topbar">
+<body id="top">
+  <header class="topbar" id="topbar">
     <a class="topbar__brand" href="#top">Ted Hadges</a>
     <nav aria-label="Primary">
       <a href="#about">About</a>
-      <a href="#music">Listen</a>
+      <a href="#listen">Listen</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
 
-  <section id="top" class="hero">
-    <img class="hero__img" src="images/saxpark.jpg"
-         alt="Ted Hadges holding a tenor saxophone in warm evening light">
-    <div class="hero__inner">
-      <span class="eyebrow hero__eyebrow reveal">Tenor Saxophone — Live / Studio / Session</span>
-      <h1 class="hero__name reveal d1">Ted<br>Hadges</h1>
-      <p class="hero__sub reveal d2">A selection of playing across live sets, the studio, and session work.</p>
-    </div>
-    <span class="hero__side">Saxophonist</span>
+  <section class="hero">
+    <img class="hero__img" src="images/saxpark.jpg" alt="Ted Hadges holding a tenor saxophone in warm evening light">
+    <span class="hero__side">Ted Hadges — Saxophone</span>
+    <a class="scrolldown" href="#about" aria-label="Scroll down">
+      <span>Scroll</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+        <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
   </section>
 
-  <section id="about" class="about on-paper">
+  <section id="about" class="about">
     <div class="wrap">
       <span class="eyebrow section-label">About</span>
       <p class="about__statement">A saxophonist who lives in the space between <em>jazz</em>, the studio, and the stage.</p>
-      <p class="about__note">Ted Hadges plays tenor across live sets, studio production, and session work — from street sessions to records. Have a listen below.</p>
+      <p class="about__note">Ted Hadges plays tenor across live sets, studio production, and session work — from street sessions to records with the NYC groove duo PINK FABRIC. Have a listen below.</p>
     </div>
   </section>
 
-  <section id="music" class="music">
+  <section id="listen" class="listen">
     <div class="wrap">
       <span class="eyebrow section-label">Listen</span>
-
-      <div class="music__group">
-        <div class="group-head"><h3>Live</h3><span>Video</span></div>
-        <div class="embed embed--video">
-          <iframe src="https://player.vimeo.com/video/94069163"
-                  title="Ted Hadges — video performance"
-                  allow="fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        </div>
+      <div class="tiles">
+        <a class="tile" href="https://pinkfabric.bandcamp.com/album/lady-magnet" target="_blank" rel="noopener">
+          <img class="tile__img" src="images/album-lady-magnet.jpg" alt="Lady Magnet album cover" loading="lazy">
+          <span class="tile__meta">
+            <span class="tile__type">Album · Pink Fabric</span>
+            <span class="tile__title">Lady Magnet</span>
+          </span>
+        </a>
+        <a class="tile" href="https://pinkfabric.bandcamp.com/album/sugar-hurts-my-eyes" target="_blank" rel="noopener">
+          <img class="tile__img" src="images/album-sugar-hurts.jpg" alt="Sugar Hurts My Eyes album cover" loading="lazy">
+          <span class="tile__meta">
+            <span class="tile__type">Album · Pink Fabric</span>
+            <span class="tile__title">Sugar Hurts My Eyes</span>
+          </span>
+        </a>
+        <a class="tile" href="https://vimeo.com/94069163" target="_blank" rel="noopener">
+          <img class="tile__img" src="images/video-pink-fabric.jpg" alt="Pink Fabric live video" loading="lazy">
+          <span class="tile__meta">
+            <span class="tile__type">Video · Live</span>
+            <span class="tile__title">Pink Fabric</span>
+          </span>
+        </a>
       </div>
 
-      <div class="music__group">
-        <div class="group-head"><h3>Pink Fabric</h3><span>Records</span></div>
-        <div class="cards">
-          <div class="card card--tall">
-            <p class="card__cap">Lady Magnet</p>
-            <iframe title="LADY MAGNET by PINK FABRIC" loading="lazy" seamless
-                    src="https://bandcamp.com/EmbeddedPlayer/album=500709890/size=large/bgcol=ece4d6/linkcol=17817a/artwork=small/transparent=true/"></iframe>
-          </div>
-          <div class="card card--short">
-            <p class="card__cap">Sugar Hurts My Eyes</p>
-            <iframe title="Sugar Hurts My Eyes by PINK FABRIC" loading="lazy" seamless
-                    src="https://bandcamp.com/EmbeddedPlayer/album=3026051395/size=large/bgcol=ece4d6/linkcol=17817a/artwork=small/track=1848929187/transparent=true/"></iframe>
-          </div>
+      <div class="more">
+        <div class="more__head"><h3>Playlists</h3><span>SoundCloud</span></div>
+        <div class="sc">
+          <iframe title="SoundCloud playlist 1" loading="lazy" scrolling="no" frameborder="no" allow="autoplay"
+                  src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2461482&color=%23d98a2b&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
         </div>
-      </div>
-
-      <div class="music__group">
-        <div class="group-head"><h3>Playlists</h3><span>SoundCloud</span></div>
-        <div class="stack">
-          <div class="embed embed--audio">
-            <iframe title="SoundCloud playlist 1" loading="lazy" scrolling="no" frameborder="no" allow="autoplay"
-                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2461482&color=%23d98a2b&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
-          </div>
-          <div class="embed embed--audio">
-            <iframe title="SoundCloud playlist 2" loading="lazy" scrolling="no" frameborder="no" allow="autoplay"
-                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/292240661&color=%23d98a2b&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
-          </div>
-          <div class="embed embed--audio">
-            <iframe title="SoundCloud playlist 3" loading="lazy" scrolling="no" frameborder="no" allow="autoplay"
-                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2043184&color=%23d98a2b&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
-          </div>
+        <div class="sc">
+          <iframe title="SoundCloud playlist 2" loading="lazy" scrolling="no" frameborder="no" allow="autoplay"
+                  src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/292240661&color=%23d98a2b&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
+        </div>
+        <div class="sc">
+          <iframe title="SoundCloud playlist 3" loading="lazy" scrolling="no" frameborder="no" allow="autoplay"
+                  src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2043184&color=%23d98a2b&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
         </div>
       </div>
     </div>
@@ -292,6 +251,16 @@
 
   <footer>
     <p>&copy; 2026 Ted Hadges</p>
+    <a class="totop" href="#top">↑ Top</a>
   </footer>
+
+  <script>
+    (function () {
+      var bar = document.getElementById('topbar');
+      var onScroll = function () { bar.classList.toggle('scrolled', window.scrollY > 40); };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
 </body>
 </html>
