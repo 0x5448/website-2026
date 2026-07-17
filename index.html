@@ -213,8 +213,9 @@
     .contact__line { font-family: var(--body); font-size: clamp(1.7rem, 3.6vw, 2.6rem); line-height: 1.2; margin: 0.4rem 0 1.8rem; letter-spacing: 0; max-width: 22ch; font-weight: 500; }
     .contact__line em { font-style: italic; color: var(--brass); }
     .mailto {
-      display: inline-block; font-family: var(--label); text-transform: uppercase; letter-spacing: 0.18em; font-weight: 600;
-      font-size: 0.9rem; padding: 0.95rem 1.8rem; border: 1px solid var(--teal); color: var(--paper-2); text-decoration: none;
+      display: inline-block; max-width: 100%; overflow-wrap: anywhere;
+      font-family: var(--label); text-transform: uppercase; letter-spacing: 0.14em; font-weight: 600;
+      font-size: 0.9rem; padding: 0.95rem 1.6rem; border: 1px solid var(--teal); color: var(--paper-2); text-decoration: none;
       transition: background-color .25s ease, color .25s ease;
     }
     .mailto:hover, .mailto:focus-visible { background: var(--teal); color: var(--ink); }
@@ -231,7 +232,11 @@
       .scrolldown svg { animation: none; }
       .tile__img { transition: none; }
     }
-    @media (max-width: 480px) { .scrolldown { display: none; } }
+    @media (max-width: 480px) {
+      .scrolldown { display: none; }
+      /* keep the email button within narrow viewports */
+      .mailto { letter-spacing: 0.06em; padding-left: 1.1rem; padding-right: 1.1rem; font-size: 0.82rem; }
+    }
   </style>
 </head>
 <body id="top">
