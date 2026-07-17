@@ -78,12 +78,13 @@
         linear-gradient(180deg, rgba(22,18,15,0.35) 0%, rgba(22,18,15,0) 22%, rgba(22,18,15,0) 62%, rgba(22,18,15,0.9) 100%),
         linear-gradient(90deg, rgba(22,18,15,0.35) 0%, rgba(22,18,15,0) 45%);
     }
-    .hero__side {
-      position: absolute; right: clamp(0.7rem, 1.6vw, 1.5rem); top: 50%; transform: translateY(-50%); z-index: 3;
-      writing-mode: vertical-rl;
-      font-family: var(--label); text-transform: uppercase; letter-spacing: 0.5em; font-weight: 700;
-      font-size: 0.72rem; color: rgba(247,240,225,0.72);
+    .hero__id {
+      position: absolute; z-index: 3; left: var(--pad); bottom: clamp(1.5rem, 4vw, 2.6rem); margin: 0;
+      font-family: var(--display); font-weight: 800; text-transform: uppercase; letter-spacing: -0.005em;
+      font-size: clamp(1.25rem, 3vw, 2.05rem); line-height: 1.05; color: #fdfaf3;
+      text-shadow: 0 1px 22px rgba(0,0,0,0.55);
     }
+    .hero__id .hero__role { color: var(--brass); }
     .scrolldown {
       position: absolute; z-index: 3; left: 50%; bottom: clamp(1.4rem, 4vw, 2.4rem); transform: translateX(-50%);
       display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
@@ -99,16 +100,6 @@
     section { padding: clamp(3.5rem, 9vw, 7rem) var(--pad); }
     .wrap { max-width: 1140px; margin-inline: auto; }
     .section-label { color: var(--teal); display: block; margin-bottom: 1.5rem; }
-    .about .section-label { color: var(--brass); }
-
-    /* ---------- about ---------- */
-    .about { background: var(--paper); color: var(--ink); }
-    .about__statement {
-      font-family: var(--body); font-size: clamp(1.5rem, 4.2vw, 3rem);
-      line-height: 1.22; letter-spacing: -0.01em; margin: 0; max-width: 20ch;
-    }
-    .about__statement em { font-style: italic; color: var(--teal); }
-    .about__note { margin: clamp(1.5rem,3vw,2.2rem) 0 0; max-width: 46ch; color: #4b4137; }
 
     /* ---------- listen: cover-tile grid ---------- */
     .listen { background: var(--ink); }
@@ -156,14 +147,13 @@
       .scrolldown svg { animation: none; }
       .tile__img { transition: none; }
     }
-    @media (max-width: 620px) { .hero__side { display: none; } }
+    @media (max-width: 480px) { .scrolldown { display: none; } }
   </style>
 </head>
 <body id="top">
   <header class="topbar" id="topbar">
     <a class="topbar__brand" href="#top">Ted Hadges</a>
     <nav aria-label="Primary">
-      <a href="#about">About</a>
       <a href="#listen">Listen</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -171,21 +161,13 @@
 
   <section class="hero">
     <img class="hero__img" src="images/saxpark.jpg" alt="Ted Hadges holding a tenor saxophone in warm evening light">
-    <span class="hero__side">Ted Hadges — Saxophone</span>
-    <a class="scrolldown" href="#about" aria-label="Scroll down">
+    <h1 class="hero__id">Ted Hadges <span class="hero__role">— Saxophonist</span></h1>
+    <a class="scrolldown" href="#listen" aria-label="Scroll to music">
       <span>Scroll</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
         <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </a>
-  </section>
-
-  <section id="about" class="about">
-    <div class="wrap">
-      <span class="eyebrow section-label">About</span>
-      <p class="about__statement">A saxophonist who lives in the space between <em>jazz</em>, the studio, and the stage.</p>
-      <p class="about__note">Ted Hadges plays tenor across live sets, studio production, and session work — from street sessions to records with the NYC groove duo PINK FABRIC. Have a listen below.</p>
-    </div>
   </section>
 
   <section id="listen" class="listen">
