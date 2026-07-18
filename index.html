@@ -210,7 +210,7 @@
 
     /* ---------- player lightbox ---------- */
     .modal[hidden] { display: none; }
-    .modal { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 1.25rem; }
+    .modal { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 1.25rem; }
     .modal__backdrop { position: absolute; inset: 0; background: rgba(10,8,6,0.85); backdrop-filter: blur(4px); }
     .modal__close {
       position: fixed; top: 0.7rem; right: 1rem; z-index: 2;
@@ -218,10 +218,10 @@
       cursor: pointer; padding: 0.25rem 0.6rem; font-family: var(--label);
     }
     .modal__close:hover, .modal__close:focus-visible { color: #fff; }
-    .modal__box { position: relative; z-index: 1; max-width: 92vw; animation: modalin .25s ease; }
-    .modal__body { display: flex; }
-    .modal__body iframe { display: block; border: 0; background: #000; max-width: 92vw; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
-    .modal__ratio { position: relative; width: min(900px, 92vw); aspect-ratio: 16 / 9; }
+    .modal__box { position: relative; z-index: 1; max-width: 100%; animation: modalin .25s ease; }
+    .modal__body { display: flex; max-width: 100%; }
+    .modal__body iframe { display: block; border: 0; background: #000; max-width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+    .modal__ratio { position: relative; width: min(900px, calc(100vw - 2.5rem)); aspect-ratio: 16 / 9; }
     .modal__ratio iframe { position: absolute; inset: 0; width: 100%; height: 100%; }
     @keyframes modalin { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
@@ -404,7 +404,8 @@
           wrap.appendChild(frame);
           body.appendChild(wrap);
         } else {
-          frame.style.width = 'min(' + (d.embedW || 500) + 'px, 92vw)';
+          frame.style.width = (d.embedW || 500) + 'px';
+          frame.style.maxWidth = '100%';
           frame.style.height = 'min(' + (d.embedH || 500) + 'px, 82vh)';
           body.appendChild(frame);
         }
