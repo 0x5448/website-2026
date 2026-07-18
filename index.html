@@ -105,7 +105,8 @@
       --pad: clamp(1.25rem, 5vw, 4rem);
     }
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    /* Smooth scrolling is handled in JS (rAF) so it works even when the OS
+       "reduce motion" setting disables the browser's native smooth scroll. */
     body {
       margin: 0; background: var(--ink); color: var(--paper);
       font-family: var(--body);
@@ -377,6 +378,41 @@
       var onScroll = function () { bar.classList.toggle('scrolled', window.scrollY > 40); };
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
+    })();
+
+    // Manual (rAF) smooth scroll for in-page anchors. Animating scrollTop
+    // frame-by-frame works regardless of the OS reduce-motion setting, which
+    // otherwise turns native smooth scrolling into an instant jump.
+    (function () {
+      var nav = document.getElementById('topbar');
+      function ease(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+      function scrollToY(targetY) {
+        var startY = window.pageYOffset;
+        var dist = targetY - startY;
+        if (Math.abs(dist) < 2) { window.scrollTo(0, targetY); return; }
+        var dur = Math.min(900, Math.max(400, Math.abs(dist) * 0.5));
+        var start = null;
+        function frame(ts) {
+          if (start === null) start = ts;
+          var p = Math.min(1, (ts - start) / dur);
+          window.scrollTo(0, Math.round(startY + dist * ease(p)));
+          if (p < 1) requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      }
+      document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          var id = a.getAttribute('href');
+          if (id === '#') return;
+          var isTop = id === '#top';
+          var target = isTop ? document.body : document.querySelector(id);
+          if (!target) return;
+          e.preventDefault();
+          var navH = nav ? nav.offsetHeight : 0;
+          var y = isTop ? 0 : (target.getBoundingClientRect().top + window.pageYOffset - navH);
+          scrollToY(Math.max(0, y));
+        });
+      });
     })();
 
     // Play tiles in an on-page lightbox instead of navigating away.
